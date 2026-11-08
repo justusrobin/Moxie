@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 export interface BrandLogoProps {
   height?: number | string;
@@ -31,8 +31,8 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
   theme = 'dark',
   animated = false,
 }) => {
-  const blue = '#3598DC';
-  const greyDark = theme === 'light' ? '#374151' : '#C4CDD6';
+  const blue = '#3298DC';
+  const greyDark = theme === 'light' ? '#17212B' : '#C4CDD6';
   const emblemStroke = '#FFFFFF';
 
   // Compute dimensions: support both fixed numbers and fluid CSS (e.g. 100%)
@@ -40,12 +40,11 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
   const svgWidth = width !== undefined ? width : (typeof height === 'number' ? Math.round(368 * (height / 108)) : undefined);
 
   // Check reduced motion preference
-  const [prefersReduced, setPrefersReduced] = useState(false);
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      setPrefersReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-    }
-  }, []);
+  const [prefersReduced] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false
+  );
 
   const shouldAnimate = animated && !prefersReduced;
 

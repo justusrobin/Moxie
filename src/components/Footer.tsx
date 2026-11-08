@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrandLogo } from './BrandLogo';
-import { ArrowRight, Phone, Mail, MapPin, ChevronDown, Clock } from 'lucide-react';
+import { ArrowRight, MapPin, ChevronDown } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (tab: string) => void;
@@ -47,7 +47,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
   return (
     <>
       {/* ─────────────────────────────────────────────────
-          CLOSING ENQUIRY BANNER (COMPACT ON MOBILE)
+          CLOSING ENQUIRY BANNER
       ───────────────────────────────────────────────── */}
       <section className="footer-enquiry-banner">
         <div className="container">
@@ -73,14 +73,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
                 href="tel:+918220223232"
                 className="footer-enquiry-phone"
               >
-                <Phone style={{ width: '0.95rem', height: '0.95rem', color: 'var(--accent)' }} />
                 +91 8220223232
               </a>
               <a
                 href="mailto:moxieinfratech@gmail.com"
                 className="footer-enquiry-email"
               >
-                <Mail style={{ width: '0.95rem', height: '0.95rem', color: 'var(--ink-4)' }} />
                 moxieinfratech@gmail.com
               </a>
             </div>
@@ -170,7 +168,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
                     onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
                     onMouseLeave={e => (e.currentTarget.style.color = 'var(--ink)')}
                   >
-                    <Phone style={{ width: '0.875rem', height: '0.875rem', color: 'var(--ink-4)' }} />
                     +91 8220223232
                   </a>
 
@@ -180,7 +177,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
                     onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
                     onMouseLeave={e => (e.currentTarget.style.color = 'var(--ink-3)')}
                   >
-                    <Mail style={{ width: '0.875rem', height: '0.875rem', color: 'var(--ink-4)' }} />
                     moxieinfratech@gmail.com
                   </a>
                 </div>
@@ -200,30 +196,21 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
 
           {/* ══════════════════════════════════════════════
               MOBILE ACCORDION FORMAT VIEW (< 769px)
-              (Formatted exactly like the requested design)
+              Minimal, formal, neat typography, no icons
              ══════════════════════════════════════════════ */}
           <div className="footer-accordion-mobile">
-            {/* Top Brand & Social/Action Bar */}
+            {/* Top Brand Logo */}
             <div className="accordion-mobile-header">
               <button
                 onClick={() => nav('home')}
                 className="accordion-mobile-brand"
                 aria-label="Moxie Infratech Home"
               >
-                <BrandLogo height={32} variant="full" theme="dark" />
+                <BrandLogo height={28} variant="full" theme="dark" />
               </button>
-
-              {/* Circular Action Icon (Phone / Contact) */}
-              <a
-                href="tel:+918220223232"
-                className="accordion-mobile-circle-btn"
-                aria-label="Call Moxie Infratech"
-              >
-                <Phone style={{ width: '1.1rem', height: '1.1rem' }} />
-              </a>
             </div>
 
-            {/* Short Tagline */}
+            {/* Subtle Tagline */}
             <p className="accordion-mobile-tagline">
               Civil &amp; electrical EPC infrastructure contractor across South India.
             </p>
@@ -245,24 +232,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
               {openSection === 'hours' && (
                 <div className="accordion-mobile-panel">
                   <div className="accordion-hours-row">
-                    <span className="accordion-hours-label">
-                      <Clock style={{ width: '0.85rem', height: '0.85rem', color: 'var(--accent)' }} />
-                      Corporate Office
-                    </span>
+                    <span className="accordion-hours-label">Corporate Office</span>
                     <span className="accordion-hours-val">Mon – Sat: 9:00 AM – 6:30 PM</span>
                   </div>
                   <div className="accordion-hours-row">
-                    <span className="accordion-hours-label">
-                      <Clock style={{ width: '0.85rem', height: '0.85rem', color: 'var(--accent)' }} />
-                      Site Execution
-                    </span>
-                    <span className="accordion-hours-val">24/7 Operations On-Site</span>
+                    <span className="accordion-hours-label">Site Execution</span>
+                    <span className="accordion-hours-val">24/7 Ongoing Operations</span>
                   </div>
                   <div className="accordion-hours-row">
-                    <span className="accordion-hours-label">
-                      <Phone style={{ width: '0.85rem', height: '0.85rem', color: 'var(--accent)' }} />
-                      Direct Desk
-                    </span>
+                    <span className="accordion-hours-label">Direct Desk</span>
                     <a href="tel:+918220223232" className="accordion-hours-link">
                       +91 8220223232
                     </a>
@@ -321,27 +299,27 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
                 <div className="accordion-mobile-panel">
                   <div className="accordion-findus-block">
                     <div className="accordion-findus-loc">
-                      <MapPin style={{ width: '0.9rem', height: '0.9rem', color: 'var(--accent)', flexShrink: 0, marginTop: '0.2rem' }} />
+                      <MapPin style={{ width: '0.8rem', height: '0.8rem', color: 'var(--accent)', flexShrink: 0, marginTop: '0.2rem' }} />
                       <div>
                         <strong>Chennai Headquarters:</strong><br />
-                        3/485, Mogappair West, Chennai — 600037, Tamil Nadu
+                        3/485, Mogappair West, Chennai — 600037
                       </div>
                     </div>
 
                     <div className="accordion-findus-loc">
-                      <MapPin style={{ width: '0.9rem', height: '0.9rem', color: 'var(--accent)', flexShrink: 0, marginTop: '0.2rem' }} />
+                      <MapPin style={{ width: '0.8rem', height: '0.8rem', color: 'var(--accent)', flexShrink: 0, marginTop: '0.2rem' }} />
                       <div>
-                        <strong>Coimbatore Engineering Office:</strong><br />
+                        <strong>Coimbatore Regional Office:</strong><br />
                         11/91, Kamatchipuram, Ondipudur, Coimbatore — 641016
                       </div>
                     </div>
 
                     <div className="accordion-findus-actions">
                       <a href="tel:+918220223232" className="accordion-findus-pill">
-                        <Phone style={{ width: '0.85rem', height: '0.85rem' }} /> +91 8220223232
+                        +91 8220223232
                       </a>
                       <a href="mailto:moxieinfratech@gmail.com" className="accordion-findus-pill">
-                        <Mail style={{ width: '0.85rem', height: '0.85rem' }} /> moxieinfratech@gmail.com
+                        moxieinfratech@gmail.com
                       </a>
                     </div>
                   </div>
@@ -349,34 +327,17 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
               )}
             </div>
 
-            {/* ── BOTTOM ROW: WhatsApp Icon + Copyright + Location ── */}
+            {/* ── BOTTOM ROW: Clean Formal Centered Copyright (No WhatsApp button) ── */}
             <div className="accordion-mobile-bottom">
-              {/* WhatsApp Floating/Fixed Circular Button */}
-              <a
-                href="https://wa.me/918220223232?text=Hello%20Moxie%20Infratech%2C%20I%20have%20an%20infrastructure%20project%20enquiry."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="accordion-whatsapp-btn"
-                aria-label="Chat on WhatsApp"
-              >
-                {/* Official WhatsApp SVG Icon */}
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF">
-                  <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm0 17.84c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.32a8.032 8.032 0 0 1-1.23-4.28c0-4.47 3.64-8.11 8.11-8.11 2.17 0 4.2 0.85 5.73 2.38a8.04 8.04 0 0 1 2.38 5.73c0 4.47-3.64 8.05-8.11 8.05zm4.44-6.07c-.24-.12-1.44-.71-1.66-.79-.22-.09-.39-.12-.55.12-.17.24-.63.79-.77.96-.15.17-.29.19-.53.07-.24-.12-1.02-.38-1.95-1.21-.72-.64-1.21-1.44-1.35-1.68-.15-.24-.02-.37.1-.49.11-.11.24-.29.37-.43.12-.15.17-.24.25-.41.08-.17.04-.31-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.41-.41-.55-.42h-.47c-.17 0-.43.06-.66.31-.22.24-.87.85-.87 2.08 0 1.22.89 2.41 1.02 2.58.12.17 1.76 2.68 4.26 3.76.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.44-.59 1.64-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z"/>
-                </svg>
-              </a>
-
-              {/* Centered Copyright & Location */}
-              <div className="accordion-mobile-copyright-box">
-                <p className="accordion-mobile-copy">
-                  &copy; 2026 Moxie Infratech Pvt. Ltd. All rights reserved.
-                </p>
-                <p className="accordion-mobile-loc">
-                  Chennai, Tamil Nadu
-                </p>
-                <p className="accordion-mobile-disclaimer">
-                  Moxie Infratech and Ingaran Power Controls Pvt. Ltd. are independent entities.
-                </p>
-              </div>
+              <p className="accordion-mobile-copy">
+                &copy; 2026 Moxie Infratech Pvt. Ltd. All rights reserved.
+              </p>
+              <p className="accordion-mobile-loc">
+                Chennai, Tamil Nadu
+              </p>
+              <p className="accordion-mobile-disclaimer">
+                Moxie Infratech and Ingaran Power Controls Pvt. Ltd. are independent entities.
+              </p>
             </div>
           </div>
 
@@ -384,7 +345,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
       </footer>
 
       {/* ─────────────────────────────────────────────────
-          FOOTER STYLES (MATCHING USER SCREENSHOT SPEC)
+          FOOTER STYLES
       ───────────────────────────────────────────────── */}
       <style>{`
         /* Closing Enquiry Banner */
@@ -532,57 +493,53 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
 
         /* ══════════════════════════════════════════════
            MOBILE ACCORDION FORMAT (< 769px)
-           Matches user reference screenshot:
-           - Dark rich backdrop
-           - Bold serif/display accordion triggers
-           - Thin line separators
-           - Circular action button top-right
-           - Circular WhatsApp badge bottom-left
-           - Centered copyright & location
+           Minimal, neat, formal corporate representation
            ══════════════════════════════════════════════ */
         @media (max-width: 768px) {
           /* Compact banner above accordion */
           .footer-enquiry-banner {
-            padding: 2.25rem 0;
+            padding: 2rem 0;
           }
 
           .footer-enquiry-inner {
             flex-direction: column;
             align-items: flex-start;
-            gap: 1.25rem;
+            gap: 1rem;
           }
 
           .footer-enquiry-rule {
-            margin-bottom: 0.65rem;
+            margin-bottom: 0.5rem;
           }
 
           .footer-enquiry-heading {
-            font-size: 1.45rem;
-            margin-bottom: 0.4rem;
+            font-size: 1.35rem;
+            margin-bottom: 0.35rem;
           }
 
           .footer-enquiry-lead {
-            font-size: 0.9rem;
-            margin-bottom: 1.25rem;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
             line-height: 1.5;
           }
 
           .footer-enquiry-btn {
             width: 100%;
-            max-width: 300px;
+            max-width: 280px;
+            font-size: 0.85rem;
+            padding: 0.75rem 1.5rem;
           }
 
           .footer-enquiry-contact {
-            display: none; /* Contact is cleanly in accordion below */
+            display: none;
           }
 
-          /* Dark styled accordion footer matching user screenshot */
+          /* Dark styled minimal formal accordion footer */
           .footer-main {
             background: #0E1318;
             color: #F5F6F8;
-            padding-top: 2rem;
-            padding-bottom: 2.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 1.75rem;
+            padding-bottom: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
           }
 
           .footer-desktop-view {
@@ -595,13 +552,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
             width: 100%;
           }
 
-          /* Header Row: Logo left + Circular Action button right */
+          /* Header: Brand Logo cleanly left-aligned */
           .accordion-mobile-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             width: 100%;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.4rem;
           }
 
           .accordion-mobile-brand {
@@ -614,60 +571,41 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
             align-items: center;
           }
 
-          .accordion-mobile-circle-btn {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            background: rgba(255, 255, 255, 0.04);
-            color: #FFFFFF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: all 0.2s ease;
-          }
-
-          .accordion-mobile-circle-btn:active {
-            background: rgba(255, 255, 255, 0.15);
-            transform: scale(0.95);
-          }
-
           /* Tagline below brand */
           .accordion-mobile-tagline {
-            font-size: 0.85rem;
-            color: rgba(245, 246, 248, 0.55);
-            line-height: 1.55;
-            margin: 0 0 1.25rem 0;
-            padding-bottom: 0.75rem;
+            font-size: 0.78rem;
+            color: rgba(245, 246, 248, 0.45);
+            line-height: 1.5;
+            margin: 0 0 1rem 0;
+            padding-bottom: 0.5rem;
           }
 
-          /* Accordion Items with Thin Dividers */
+          /* Accordion Items with Thin Delicate Dividers */
           .accordion-mobile-item {
-            border-top: 1px solid rgba(255, 255, 255, 0.09);
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
             width: 100%;
           }
 
           .accordion-mobile-item:last-of-type {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
           }
 
-          /* Trigger Button */
+          /* Trigger Button - Refined, formal, understated font size */
           .accordion-mobile-trigger {
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1.15rem 0;
+            padding: 0.85rem 0;
             background: none;
             border: none;
             cursor: pointer;
             text-align: left;
-            font-family: var(--font-display, 'Space Grotesk', serif, sans-serif);
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: #F5F6F8;
-            letter-spacing: -0.01em;
+            font-family: var(--font-body);
+            font-size: 0.925rem;
+            font-weight: 500;
+            color: #E2E8F0;
+            letter-spacing: 0.01em;
             transition: color 0.15s ease;
           }
 
@@ -676,10 +614,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
           }
 
           .accordion-mobile-chevron {
-            width: 1.25rem;
-            height: 1.25rem;
-            color: rgba(245, 246, 248, 0.45);
-            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), color 0.2s;
+            width: 1rem;
+            height: 1rem;
+            color: rgba(245, 246, 248, 0.35);
+            transition: transform 0.25s ease, color 0.2s;
             flex-shrink: 0;
           }
 
@@ -690,14 +628,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
 
           /* Expanded Panels */
           .accordion-mobile-panel {
-            padding-bottom: 1.25rem;
-            animation: accordionSlideDown 0.25s ease-out;
+            padding-bottom: 1rem;
+            animation: accordionSlideDown 0.2s ease-out;
           }
 
           @keyframes accordionSlideDown {
             from {
               opacity: 0;
-              transform: translateY(-6px);
+              transform: translateY(-4px);
             }
             to {
               opacity: 1;
@@ -709,9 +647,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
           .accordion-hours-row {
             display: flex;
             flex-direction: column;
-            gap: 0.25rem;
-            padding: 0.5rem 0;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+            gap: 0.15rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
           }
 
           .accordion-hours-row:last-child {
@@ -719,30 +657,25 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
           }
 
           .accordion-hours-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.78rem;
+            font-size: 0.7rem;
             font-family: var(--font-mono);
-            color: rgba(245, 246, 248, 0.5);
+            color: rgba(245, 246, 248, 0.45);
             text-transform: uppercase;
             letter-spacing: 0.08em;
           }
 
           .accordion-hours-val {
-            font-size: 0.9rem;
-            color: #F5F6F8;
-            font-weight: 500;
-            padding-left: 1.25rem;
+            font-size: 0.825rem;
+            color: #CBD5E1;
+            font-weight: 400;
           }
 
           .accordion-hours-link {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             font-family: var(--font-mono);
             color: var(--accent);
             text-decoration: none;
-            font-weight: 600;
-            padding-left: 1.25rem;
+            font-weight: 500;
           }
 
           /* Links List */
@@ -757,12 +690,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
           .accordion-link-btn {
             background: none;
             border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 0.55rem 0;
             width: 100%;
             text-align: left;
-            font-size: 0.925rem;
-            color: rgba(245, 246, 248, 0.75);
+            font-size: 0.825rem;
+            color: rgba(245, 246, 248, 0.65);
             cursor: pointer;
             transition: color 0.15s, padding-left 0.15s;
           }
@@ -773,111 +706,86 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
 
           .accordion-link-btn:active {
             color: var(--accent);
-            padding-left: 0.35rem;
+            padding-left: 0.25rem;
           }
 
           /* Find Us Content */
           .accordion-findus-block {
             display: flex;
             flex-direction: column;
-            gap: 0.85rem;
+            gap: 0.65rem;
           }
 
           .accordion-findus-loc {
             display: flex;
-            gap: 0.65rem;
+            gap: 0.5rem;
             align-items: flex-start;
-            font-size: 0.875rem;
-            color: rgba(245, 246, 248, 0.75);
-            line-height: 1.55;
+            font-size: 0.8rem;
+            color: rgba(245, 246, 248, 0.65);
+            line-height: 1.5;
           }
 
           .accordion-findus-loc strong {
-            color: #F5F6F8;
+            color: #E2E8F0;
+            font-weight: 500;
           }
 
           .accordion-findus-actions {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             gap: 0.5rem;
-            margin-top: 0.4rem;
+            margin-top: 0.35rem;
           }
 
           .accordion-findus-pill {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            justify-content: center;
+            gap: 0.4rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 4px;
-            padding: 0.55rem 0.85rem;
+            padding: 0.45rem 0.65rem;
             font-family: var(--font-mono);
-            font-size: 0.825rem;
-            color: #F5F6F8;
+            font-size: 0.75rem;
+            color: #CBD5E1;
             text-decoration: none;
-            width: 100%;
+            flex: 1;
+            text-align: center;
           }
 
-          /* Bottom Bar with WhatsApp on Left, Centered Copyright */
+          /* Bottom Row: Centered Formal Clean Copyright (No WhatsApp button) */
           .accordion-mobile-bottom {
             display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding-top: 2rem;
-            margin-top: 1rem;
-            position: relative;
-          }
-
-          /* Green Circular WhatsApp Badge */
-          .accordion-whatsapp-btn {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: #25D366;
-            color: #FFFFFF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
-            flex-shrink: 0;
-            transition: transform 0.2s, box-shadow 0.2s;
-          }
-
-          .accordion-whatsapp-btn:active {
-            transform: scale(0.92);
-            box-shadow: 0 2px 8px rgba(37, 211, 102, 0.45);
-          }
-
-          /* Copyright & Location text */
-          .accordion-mobile-copyright-box {
-            display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            text-align: left;
-            flex: 1;
-            font-family: var(--font-mono);
+            align-items: center;
+            text-align: center;
+            padding-top: 1.5rem;
+            margin-top: 0.5rem;
           }
 
           .accordion-mobile-copy {
-            font-size: 0.72rem;
-            color: rgba(245, 246, 248, 0.5);
+            font-size: 0.68rem;
+            color: rgba(245, 246, 248, 0.45);
             margin: 0;
             line-height: 1.4;
+            font-family: var(--font-mono);
           }
 
           .accordion-mobile-loc {
-            font-size: 0.72rem;
-            color: rgba(245, 246, 248, 0.4);
-            margin: 0.2rem 0 0 0;
-            font-weight: 500;
+            font-size: 0.68rem;
+            color: rgba(245, 246, 248, 0.35);
+            margin: 0.15rem 0 0 0;
+            font-family: var(--font-mono);
           }
 
           .accordion-mobile-disclaimer {
-            font-size: 0.62rem;
-            color: rgba(245, 246, 248, 0.25);
+            font-size: 0.58rem;
+            color: rgba(245, 246, 248, 0.22);
             margin: 0.25rem 0 0 0;
             line-height: 1.4;
+            max-width: 320px;
+            font-family: var(--font-mono);
           }
         }
       `}</style>

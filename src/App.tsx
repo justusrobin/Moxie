@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
@@ -12,142 +12,140 @@ import { RFQModal } from './components/RFQModal';
 import { LoadingScreen } from './components/LoadingScreen';
 import type { ProjectItem } from './data/companyData';
 
+const TABS = ['home', 'about', 'services', 'projects', 'industries', 'contact'];
+
 export function App() {
-  const [currentTab, setCurrentTab] = useState<string>('home');
+  const [currentTab, setCurrentTab]     = useState<string>('home');
+  const [visibleTab, setVisibleTab]     = useState<string>('home');   // what's actually rendered
+  const [pageVisible, setPageVisible]   = useState(true);             // for fade transition
   const [rfqModalOpen, setRfqModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
-  const [rfqInitialData, setRfqInitialData] = useState<any>(null);
+  const [rfqInitialData, setRfqInitialData]   = useState<any>(null);
+  const transitionRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Sync with window.location.hash for routing
+  /* Sync hash on load */
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '');
-      if (['home', 'about', 'services', 'projects', 'industries', 'contact'].includes(hash)) {
-        setCurrentTab(hash);
-      } else {
-        setCurrentTab('home');
-      }
+    const hash = window.location.hash.replace('#', '');
+    if (TABS.includes(hash)) { setCurrentTab(hash); setVisibleTab(hash); }
+    const onHash = () => {
+      const h = window.location.hash.replace('#', '');
+      if (TABS.includes(h)) handleNavigate(h);
     };
-
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
   const handleNavigate = (tab: string) => {
-    setCurrentTab(tab);
-    window.location.hash = tab;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (tab === currentTab) return;
+
+    /* Fade out */
+    setPageVisible(false);
+    if (transitionRef.current) clearTimeout(transitionRef.current);
+
+    transitionRef.current = setTimeout(() => {
+      /* Swap content */
+      setCurrentTab(tab);
+      setVisibleTab(tab);
+      window.location.hash = tab;
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      /* Fade in */
+      setPageVisible(true);
+    }, 260);
   };
 
-  const handleOpenRFQWithData = (data: any) => {
-    setRfqInitialData(data);
+  const openRFQ = (data?: any) => {
+    setRfqInitialData(data ?? null);
     setRfqModalOpen(true);
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-white)', color: 'var(--ink)', display: 'flex', flexDirection: 'column', fontFamily: 'var(--font-body)' }}>
-      {/* Purposeful Brand Loading Screen */}
+    <div style={{
+      minHeight: '100vh',
+      backgroundColor: 'var(--bg-white)',
+      color: 'var(--ink)',
+      display: 'flex',
+      flexDirection: 'column',
+      fontFamily: 'var(--font-body)',
+    }}>
+      {/* Splash loading screen */}
       <LoadingScreen />
 
-      {/* Clean Navigation Header */}
+      {/* Header */}
       <Header
         currentTab={currentTab}
         onNavigate={handleNavigate}
-        onOpenRFQ={() => {
-          setRfqInitialData(null);
-          setRfqModalOpen(true);
-        }}
+        onOpenRFQ={() => openRFQ()}
       />
 
-      {/* Main Page Content Body */}
-      <main className="flex-1 w-full">
-        {(currentTab === 'home' || !['about', 'services', 'projects', 'industries', 'contact'].includes(currentTab)) && (
+      {/* Page content with fade transition */}
+      <main
+        style={{
+          flex: 1,
+          opacity: pageVisible ? 1 : 0,
+          transform: pageVisible ? 'translateY(0)' : 'translateY(10px)',
+          transition: pageVisible
+            ? 'opacity 0.35s ease, transform 0.35s ease'
+            : 'opacity 0.22s ease, transform 0.22s ease',
+          willChange: 'opacity, transform',
+        }}
+      >
+        {visibleTab === 'home' && (
           <HomePage
             onNavigate={handleNavigate}
-            onOpenRFQ={() => {
-              setRfqInitialData(null);
-              setRfqModalOpen(true);
-            }}
-            onSelectProject={(p) => setSelectedProject(p)}
-            onPreFillRFQ={handleOpenRFQWithData}
+            onOpenRFQ={() => openRFQ()}
+            onSelectProject={p => setSelectedProject(p)}
+            onPreFillRFQ={data => openRFQ(data)}
           />
         )}
-
-        {currentTab === 'about' && (
-          <AboutPage
-            onOpenRFQ={() => {
-              setRfqInitialData(null);
-              setRfqModalOpen(true);
-            }}
-          />
+        {visibleTab === 'about' && (
+          <AboutPage onOpenRFQ={() => openRFQ()} />
         )}
-
-        {currentTab === 'services' && (
+        {visibleTab === 'services' && (
           <ServicesPage
-            onOpenRFQ={() => {
-              setRfqInitialData(null);
-              setRfqModalOpen(true);
-            }}
-            onPreFillRFQ={handleOpenRFQWithData}
+            onOpenRFQ={() => openRFQ()}
+            onPreFillRFQ={data => openRFQ(data)}
           />
         )}
-
-        {currentTab === 'projects' && (
+        {visibleTab === 'projects' && (
           <ProjectsPage
-            onSelectProject={(p) => setSelectedProject(p)}
-            onOpenRFQ={() => {
-              setRfqInitialData(null);
-              setRfqModalOpen(true);
-            }}
+            onSelectProject={p => setSelectedProject(p)}
+            onOpenRFQ={() => openRFQ()}
           />
         )}
-
-        {currentTab === 'industries' && (
+        {visibleTab === 'industries' && (
           <IndustriesPage
-            onOpenRFQ={() => {
-              setRfqInitialData(null);
-              setRfqModalOpen(true);
-            }}
+            onOpenRFQ={() => openRFQ()}
             onNavigateToProjects={() => handleNavigate('projects')}
           />
         )}
-
-        {currentTab === 'contact' && (
+        {visibleTab === 'contact' && (
           <ContactPage />
         )}
       </main>
 
-      {/* Global Clean Engineering Footer */}
+      {/* Footer */}
       <Footer
         onNavigate={handleNavigate}
-        onOpenRFQ={() => {
-          setRfqInitialData(null);
-          setRfqModalOpen(true);
-        }}
+        onOpenRFQ={() => openRFQ()}
       />
 
-      {/* Project Detail Modal */}
+      {/* Project detail modal */}
       {selectedProject && (
         <ProjectDetailModal
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
           onEnquireSimilar={(title: string) => {
             setSelectedProject(null);
-            setRfqInitialData({ projectTitle: title });
-            setRfqModalOpen(true);
+            openRFQ({ projectTitle: title });
           }}
         />
       )}
 
-      {/* Project RFP / Enquiry Modal */}
+      {/* RFQ modal */}
       <RFQModal
         isOpen={rfqModalOpen}
         initialData={rfqInitialData}
-        onClose={() => {
-          setRfqModalOpen(false);
-          setRfqInitialData(null);
-        }}
+        onClose={() => { setRfqModalOpen(false); setRfqInitialData(null); }}
       />
     </div>
   );

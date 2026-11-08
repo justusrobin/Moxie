@@ -1,117 +1,32 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/images/moxie_emblem.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    
+    <!-- Primary SEO Meta Tags -->
     <title>Moxie Infratech Pvt Ltd | EHV Substation Civil & Electrical EPC Contractor</title>
+    <meta name="title" content="Moxie Infratech Pvt Ltd | EHV Substation Civil & Electrical EPC Contractor" />
     <meta name="description" content="End-to-end civil construction & electrical turnkey solutions for EHV electrical substations (11kV to 765kV), transmission & distribution, industrial electrification, MEP, and statutory CEIG compliance." />
-    <meta name="theme-color" content="#111820" />
+    <meta name="keywords" content="Moxie Infratech, EHV Substation Civil, Electrical Turnkey Contractor, Solar Pooling Substation, GIS Foundation, MEP Services, CEIG Inspection, Chennai, Coimbatore, Power Utilities" />
+    <meta name="author" content="Moxie Infratech Pvt Ltd" />
+    <meta name="theme-color" content="#0B0F14" />
 
-    <!-- Google Fonts -->
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://moxieinfratech.com/" />
+    <meta property="og:title" content="Moxie Infratech Pvt Ltd | Industrial Infrastructure & EHV Substation Works" />
+    <meta property="og:description" content="Turnkey civil & electrical infrastructure solutions for utility-scale solar pooling substations, GIS/AIS switchyards, and industrial facilities across South India." />
+    <meta property="og:image" content="/favicon.svg" />
+
+    <!-- Google Fonts: Space Grotesk, Inter, JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-    <!-- Anti-flash theme init -->
-    <script>
-      (function() {
-        try {
-          var saved = localStorage.getItem('moxie_theme');
-          var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'dark');
-          document.documentElement.setAttribute('data-theme', theme);
-        } catch (e) {}
-      })();
-    </script>
-
-    <style>
-      /* Fast, lightweight pre-render splash */
-      #splash {
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        background: #111820;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1.5rem;
-        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      #splash.hide {
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      #splash-logo {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      #splash-logo img {
-        height: 64px;
-        width: auto;
-        aspect-ratio: 2048 / 768;
-        object-fit: contain;
-        border-radius: 4px;
-        filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.5));
-      }
-
-      #splash-bar {
-        width: 140px;
-        height: 2px;
-        background: rgba(255, 255, 255, 0.08);
-        border-radius: 2px;
-        overflow: hidden;
-      }
-
-      #splash-bar-fill {
-        height: 100%;
-        width: 0%;
-        background: linear-gradient(90deg, #1769D2, #78AEFF);
-        border-radius: 2px;
-        animation: splashFill 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-      }
-
-      @keyframes splashFill {
-        to { width: 100%; }
-      }
-
-      #root {
-        opacity: 1;
-      }
-    </style>
   </head>
   <body>
-    <!-- FAST INITIAL SPLASH -->
-    <div id="splash">
-      <div id="splash-logo">
-        <img src="/images/moxie_logo_full.png" alt="Moxie Infratech Pvt Ltd" />
-      </div>
-      <div id="splash-bar">
-        <div id="splash-bar-fill"></div>
-      </div>
-    </div>
-
-    <!-- APP ROOT -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-
-    <script>
-      // Immediately remove splash as soon as React takes over
-      window.addEventListener('DOMContentLoaded', function () {
-        setTimeout(function () {
-          var splash = document.getElementById('splash');
-          if (splash) {
-            splash.classList.add('hide');
-            setTimeout(function () {
-              if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
-            }, 400);
-          }
-        }, 350);
-      });
-    </script>
   </body>
 </html>

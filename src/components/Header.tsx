@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BrandLogo } from './BrandLogo';
-import { useTheme } from '../context/useTheme';
-import { Menu, X, Sun, Moon, ArrowRight, ChevronRight, Phone, Mail } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 interface HeaderProps {
   currentTab: string;
@@ -12,67 +11,56 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   currentTab,
   onNavigate,
-  onOpenRFQ,
+  onOpenRFQ
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 60);
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll when mobile drawer is open to prevent background page scrolling
+  // Close mobile menu when tab changes
   useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-      document.body.style.touchAction = 'none';
-    } else {
-      document.body.style.overflow = '';
-      document.body.style.touchAction = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-      document.body.style.touchAction = '';
-    };
-  }, [mobileMenuOpen]);
+    setMobileMenuOpen(false);
+  }, [currentTab]);
 
   const navItems = [
     { id: 'about', label: 'About' },
     { id: 'services', label: 'Services' },
     { id: 'projects', label: 'Projects' },
     { id: 'industries', label: 'Industries' },
-    { id: 'contact', label: 'Contact' },
+    { id: 'contact', label: 'Contact' }
   ];
 
   const handleNavClick = (id: string) => {
-    setMobileMenuOpen(false);
     onNavigate(id);
+    setMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const isHome = currentTab === 'home' || !navItems.some((n) => n.id === currentTab);
+  const isHome = currentTab === 'home' || !['about', 'services', 'projects', 'industries', 'contact'].includes(currentTab);
   const isTransparent = isHome && !scrolled && !mobileMenuOpen;
+  const isDarkNav = isTransparent || mobileMenuOpen;
 
   return (
     <>
       <header
-        className={`site-header ${isTransparent ? 'site-header--transparent' : 'site-header--scrolled'}`}
+        className={`site-header${isTransparent ? ' site-header--transparent' : ''}${mobileMenuOpen ? ' site-header--mobile-open' : ''}${!isTransparent && !mobileMenuOpen ? ' site-header--solid' : ''}${scrolled ? ' scrolled' : ''}`}
         role="banner"
       >
         <div className="container header-inner">
-          {/* Official Brand Logo */}
+
+          {/* Brand Logo */}
           <button
             onClick={() => handleNavClick('home')}
             className="header-logo-btn"
-            aria-label="Moxie Infratech Pvt Ltd — Return to Home"
+            aria-label="Moxie Infratech — Home"
           >
-            <BrandLogo height={34} variant="full" />
+            <BrandLogo height={38} variant="full" theme={isDarkNav ? 'dark' : 'light'} />
           </button>
 
           {/* Desktop Navigation */}
@@ -83,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`nav-link ${isActive ? 'nav-link--active' : ''}`}
+                  className={`nav-link${isActive ? ' nav-link--active' : ''}`}
                   aria-current={isActive ? 'page' : undefined}
                 >
                   {item.label}
@@ -92,163 +80,62 @@ export const Header: React.FC<HeaderProps> = ({
             })}
           </nav>
 
-          {/* Action Group: Theme Toggle & Primary Enquiry CTA */}
-          <div className="header-actions">
-            {/* Theme Toggle Button */}
+          {/* Desktop CTA */}
+          <div className="desktop-cta">
             <button
-              onClick={toggleTheme}
-              className="theme-toggle-btn"
-              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-              title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+              onClick={onOpenRFQ}
+              className="btn-header-enquiry"
             >
-              {theme === 'dark' ? (
-                <Sun style={{ width: '1.15rem', height: '1.15rem' }} />
-              ) : (
-                <Moon style={{ width: '1.15rem', height: '1.15rem' }} />
-              )}
-            </button>
-
-            {/* Desktop Header CTA */}
-            <button onClick={onOpenRFQ} className="btn-header-enquiry">
               Discuss Your Project
             </button>
-
-            {/* Mobile Menu Toggle Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="mobile-menu-toggle"
-              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              aria-expanded={mobileMenuOpen}
-            >
-              {mobileMenuOpen ? (
-                <X style={{ width: '1.4rem', height: '1.4rem' }} />
-              ) : (
-                <Menu style={{ width: '1.4rem', height: '1.4rem' }} />
-              )}
-            </button>
           </div>
+
+          {/* Mobile Hamburger */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="mobile-menu-toggle"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
+          >
+            {mobileMenuOpen
+              ? <X style={{ width: '1.5rem', height: '1.5rem' }} />
+              : <Menu style={{ width: '1.5rem', height: '1.5rem' }} />
+            }
+          </button>
         </div>
       </header>
 
-      {/* Mobile Backdrop Overlay */}
+      {/* Mobile Menu Drawer — rendered outside header to avoid fixed positioning stacking issues */}
       {mobileMenuOpen && (
-        <div
-          className="mobile-menu-backdrop"
-          onClick={() => setMobileMenuOpen(false)}
-          aria-hidden="true"
-        />
-      )}
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="mobile-menu-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
-          <nav style={{ display: 'flex', flexDirection: 'column' }}>
+        <div className="mobile-menu-drawer" role="dialog" aria-label="Mobile navigation">
+          <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
             <button
               onClick={() => handleNavClick('home')}
-              className={`mobile-nav-link ${currentTab === 'home' ? 'mobile-nav-link--active' : ''}`}
+              className={`mobile-nav-link${currentTab === 'home' ? ' mobile-nav-link--active' : ''}`}
             >
-              <span>Home Overview</span>
-              <ChevronRight style={{ width: '1.1rem', height: '1.1rem', opacity: 0.6 }} />
+              Overview
             </button>
-
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`mobile-nav-link ${currentTab === item.id ? 'mobile-nav-link--active' : ''}`}
+                className={`mobile-nav-link${currentTab === item.id ? ' mobile-nav-link--active' : ''}`}
               >
-                <span>{item.label}</span>
-                <ChevronRight style={{ width: '1.1rem', height: '1.1rem', opacity: 0.6 }} />
+                {item.label}
               </button>
             ))}
           </nav>
 
-          {/* Drawer Actions & Contact */}
-          <div style={{ marginTop: 'auto', paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            {/* Quick Contact Desk */}
-            <div
-              style={{
-                background: 'var(--bg-surface)',
-                border: '1px solid var(--border-color)',
-                borderRadius: '6px',
-                padding: '1rem',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.65rem',
-              }}
-            >
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--blue-accent)' }}>
-                Direct Engineering Desk
-              </div>
-              <a
-                href="tel:+918220223232"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  color: 'var(--text-primary)',
-                  textDecoration: 'none',
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.9rem',
-                  fontWeight: 600,
-                  minHeight: '36px',
-                }}
-              >
-                <Phone style={{ width: '0.9rem', height: '0.9rem', color: 'var(--blue-accent)' }} />
-                +91 8220223232
-              </a>
-              <a
-                href="mailto:moxieinfratech@gmail.com"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  color: 'var(--text-muted)',
-                  textDecoration: 'none',
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.825rem',
-                  minHeight: '32px',
-                }}
-              >
-                <Mail style={{ width: '0.9rem', height: '0.9rem', color: 'var(--blue-accent)' }} />
-                moxieinfratech@gmail.com
-              </a>
-            </div>
-
-            {/* Appearance Row */}
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '0.75rem 0',
-                borderTop: '1px solid var(--border-subtle)',
-              }}
-            >
-              <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Appearance</span>
-              <button
-                onClick={toggleTheme}
-                className="theme-toggle-btn"
-                aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-              >
-                {theme === 'dark' ? (
-                  <Sun style={{ width: '1.1rem', height: '1.1rem' }} />
-                ) : (
-                  <Moon style={{ width: '1.1rem', height: '1.1rem' }} />
-                )}
-              </button>
-            </div>
-
-            {/* Primary Action Button */}
+          <div style={{ paddingTop: '1.5rem', borderTop: '1px solid var(--line)', marginTop: '1.5rem' }}>
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenRFQ();
               }}
               className="btn-primary"
-              style={{ width: '100%', justifyContent: 'center', minHeight: '50px' }}
+              style={{ width: '100%', justifyContent: 'center', padding: '0.85rem 1.5rem' }}
             >
-              Discuss Your Project <ArrowRight style={{ width: '1rem', height: '1rem' }} />
+              Discuss Your Project
             </button>
           </div>
         </div>

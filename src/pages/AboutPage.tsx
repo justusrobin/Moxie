@@ -1,169 +1,97 @@
 import React from 'react';
 import { COMPANY_INFO } from '../data/companyData';
-import { Check, ArrowRight } from 'lucide-react';
 
-export const AboutPage: React.FC<{ onOpenRFQ: () => void }> = ({ onOpenRFQ }) => (
-  <div style={{ background: 'var(--bg-main)' }}>
+export const AboutPage: React.FC<{ onOpenRFQ: () => void }> = (_props) => (
+  <div style={{ background: 'var(--bg-white)' }}>
 
-    {/* PAGE HEADER */}
-    <section
-      style={{
-        background: 'var(--bg-surface)',
-        paddingTop: 'clamp(6.5rem, 12vw, 8.5rem)',
-        paddingBottom: 'clamp(3rem, 6vw, 5rem)',
-        borderBottom: '1px solid var(--border-color)',
-      }}
-    >
+    {/* HEADER — light stone */}
+    <section style={{ background: 'var(--bg-light)', paddingTop: '9rem', paddingBottom: '5rem', borderBottom: '1px solid var(--line)' }}>
       <div className="container">
-        <span className="eyebrow">Corporate Profile</span>
-        <h1 style={{ maxWidth: '780px', marginBottom: '1.25rem' }}>
-          Engineering Precision.<br />Dependable Infrastructure Execution.
-        </h1>
-        <p className="text-lead" style={{ maxWidth: '640px' }}>
-          Moxie Infratech Pvt Ltd is an integrated EPC contractor delivering high-voltage substation civil works, electrical power infrastructure, and turnkey industrial installations across South India.
+        <span className="eyebrow">About Moxie Infratech</span>
+        <h1 style={{ color: 'var(--ink)', maxWidth: '700px', marginBottom: '1.5rem' }}>Engineering Precision.<br />Dependable Execution.</h1>
+        <p style={{ fontSize: '1.125rem', color: 'var(--ink-2)', lineHeight: 1.75, maxWidth: '560px' }}>
+          Moxie Infratech Pvt Ltd is a turnkey EPC contractor delivering high-voltage substation civil works, electrical infrastructure, and industrial engineering across South India.
         </p>
       </div>
     </section>
 
-    {/* PHILOSOPHY & CAPABILITY */}
-    <section style={{ background: 'var(--bg-main)', padding: 'clamp(4.5rem, 8vw, 6.5rem) 0', borderBottom: '1px solid var(--border-color)' }}>
+    {/* PHILOSOPHY — white */}
+    <section style={{ background: 'var(--bg-white)', padding: '6rem 0', borderBottom: '1px solid var(--line)' }}>
       <div className="container">
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
-            gap: 'clamp(2.5rem, 5vw, 4.5rem)',
-            alignItems: 'center',
-          }}
-        >
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '4rem', alignItems: 'center' }} className="split-grid">
           <div>
-            <hr className="rule-accent" />
-            <h2 style={{ marginBottom: '1.25rem', maxWidth: '520px' }}>
-              Rigorous planning. Seamless civil-electrical coordination.
-            </h2>
-            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.75, marginBottom: '1.25rem', maxWidth: '500px' }}>
-              As a unified EPC entity, Moxie eliminates vendor friction between deep earthworks, precision equipment foundations, switchyard structures, and electrical energization.
+            <hr className="rule" />
+            <h2 style={{ color: 'var(--ink)', marginBottom: '1.5rem', maxWidth: '500px' }}>Precise planning. Coordinated delivery.</h2>
+            <p style={{ color: 'var(--ink-2)', lineHeight: 1.8, marginBottom: '1.25rem', maxWidth: '480px' }}>
+              As a multi-disciplinary EPC firm, we act as a single accountable entity — from geotechnical excavation to final energization and statutory CEIG clearance.
             </p>
-            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.875rem', marginTop: '1.25rem' }}>
-              {[
-                'Direct senior engineering director oversight on every project',
-                'Integrated civil and electrical engineering milestones to prevent energization delays',
-                'Six Sigma quality governance applied across civil plinths and electrical terminations',
-                'Resource-efficient construction minimizing environmental impact and material waste',
-              ].map((pt, idx) => (
-                <li key={idx} style={{ display: 'flex', gap: '0.875rem', alignItems: 'flex-start', fontSize: '0.925rem', color: 'var(--text-secondary)' }}>
-                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--blue-primary)', flexShrink: 0, marginTop: '0.55rem' }} />
-                  <span>{pt}</span>
+            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.875rem', marginTop: '1.5rem' }}>
+              {['Direct senior management reporting on every project', 'Integrated civil and electrical scheduling', 'Responsible use of water, energy, and construction materials'].map(pt => (
+                <li key={pt} style={{ display: 'flex', gap: '0.875rem', alignItems: 'flex-start', fontSize: '0.9375rem', color: 'var(--ink-2)' }}>
+                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent)', flexShrink: 0, marginTop: '0.5rem' }} />{pt}
                 </li>
               ))}
             </ul>
           </div>
-
-          <div className="photo-frame-editorial" style={{ height: 'clamp(220px, 55vw, 420px)' }}>
-            <img src="/images/civil_foundations.jpg" alt="Substation civil foundation works" loading="lazy" />
+          <div className="photo-frame" style={{ height: '420px' }}>
+            <img src="/images/civil_foundations.jpg" alt="Substation civil construction" />
           </div>
         </div>
 
-        {/* Vision & Mission */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
-            gap: '1.5rem',
-            marginTop: 'clamp(3rem, 6vw, 5rem)',
-            paddingTop: 'clamp(2.5rem, 5vw, 3.5rem)',
-            borderTop: '1px solid var(--border-color)',
-          }}
-        >
-          <div style={{ background: 'var(--bg-surface)', padding: 'clamp(1.5rem, 4vw, 2.5rem)', borderRadius: '6px', borderLeft: '3px solid var(--blue-primary)' }}>
-            <h3 style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.14em', color: 'var(--blue-accent)', marginBottom: '0.75rem' }}>
-              Corporate Vision
-            </h3>
-            <p style={{ fontSize: '0.975rem', color: 'var(--text-secondary)', lineHeight: 1.75, fontStyle: 'italic' }}>
-              "Achieve the target with optimal engineering solutions and create enduring standards across the EPC and infrastructure industry."
-            </p>
-          </div>
-
-          <div style={{ background: 'var(--bg-surface)', padding: 'clamp(1.5rem, 4vw, 2.5rem)', borderRadius: '6px', borderLeft: '3px solid var(--blue-accent)' }}>
-            <h3 style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.14em', color: 'var(--blue-accent)', marginBottom: '0.75rem' }}>
-              Engineering Mission
-            </h3>
-            <p style={{ fontSize: '0.975rem', color: 'var(--text-secondary)', lineHeight: 1.75, fontStyle: 'italic' }}>
-              "Provide engineering services with continuous technical upgrades to address changing industrial needs, delivering high value-addition while maintaining stringent quality and safety standards."
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* CORE VALUES */}
-    <section style={{ background: 'var(--bg-surface)', padding: 'clamp(4.5rem, 8vw, 6.5rem) 0', borderBottom: '1px solid var(--border-color)' }}>
-      <div className="container">
-        <span className="eyebrow">Operating Principles</span>
-        <h2 style={{ marginBottom: 'clamp(2rem, 5vw, 3.5rem)' }}>The Principles Guiding Our Execution.</h2>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: 'clamp(1.25rem, 3vw, 2rem)' }}>
-          {COMPANY_INFO.coreValues.map((val, idx) => (
-            <div key={idx} className="photo-card" style={{ padding: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '2.5rem',
-                  fontWeight: 700,
-                  color: 'var(--blue-primary)',
-                  opacity: 0.25,
-                  lineHeight: 1,
-                  display: 'block',
-                  marginBottom: '0.75rem',
-                  letterSpacing: '-0.04em',
-                }}
-              >
-                0{idx + 1}
-              </span>
-              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.65rem' }}>{val.title}</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.68 }}>
-                {val.description}
-              </p>
+        {/* Vision / Mission */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(1,1fr)', gap: '1.5rem', marginTop: '5rem', paddingTop: '3.5rem', borderTop: '1px solid var(--line)' }} className="vm-grid">
+          {[
+            { label: 'Vision', text: '"Achieve the target with optimal solutions and create enduring standards across the EPC and infrastructure industry."' },
+            { label: 'Mission', text: '"Provide engineering services with continuous technical upgrades to address changing industrial needs, delivering high value-addition while maintaining stringent quality and safety standards."' },
+          ].map(v => (
+            <div key={v.label} style={{ background: 'var(--bg-off)', padding: '2.5rem', borderRadius: '8px', borderLeft: '3px solid var(--accent)' }}>
+              <h3 style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.14em', color: 'var(--accent)', marginBottom: '1rem' }}>{v.label}</h3>
+              <p style={{ fontSize: '1rem', color: 'var(--ink-2)', lineHeight: 1.8, fontStyle: 'italic' }}>{v.text}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    {/* LEADERSHIP */}
-    <section style={{ background: 'var(--bg-main)', padding: 'clamp(4.5rem, 8vw, 6.5rem) 0', borderBottom: '1px solid var(--border-color)' }}>
+    {/* CORE VALUES — off-white */}
+    <section style={{ background: 'var(--bg-off)', padding: '6rem 0', borderBottom: '1px solid var(--line)' }}>
       <div className="container">
-        <span className="eyebrow">Executive Leadership</span>
-        <h2 style={{ marginBottom: '0.75rem' }}>Technical Directors &amp; Governance.</h2>
-        <p style={{ color: 'var(--text-muted)', marginBottom: 'clamp(2rem, 5vw, 3.5rem)', maxWidth: '520px' }}>
-          Directors with over two decades of high-voltage substation engineering and quality standardization experience.
-        </p>
+        <span className="eyebrow">Core Principles</span>
+        <h2 style={{ color: 'var(--ink)', marginBottom: '3.5rem' }}>What guides our work.</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(1,1fr)', gap: '1.5rem' }} className="val-grid">
+          {COMPANY_INFO.coreValues.map((val, i) => (
+            <div key={i} className="card" style={{ padding: '2.5rem' }}>
+              <span style={{ fontFamily: 'var(--font-display)', fontSize: '3rem', fontWeight: 700, color: 'var(--accent)', opacity: 0.15, lineHeight: 1, display: 'block', marginBottom: '1.25rem', letterSpacing: '-0.05em' }}>0{i+1}</span>
+              <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '0.75rem' }}>{val.title}</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--ink-2)', lineHeight: 1.7 }}>{val.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
 
-        {/* Directors */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 'clamp(1.5rem, 3vw, 2rem)', marginBottom: '3rem' }}>
-          {COMPANY_INFO.leadership.map((leader, idx) => (
-            <div key={idx} className="photo-card" style={{ padding: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.75rem', paddingBottom: '1.25rem', borderBottom: '1px solid var(--border-color)', marginBottom: '1.25rem' }}>
+    {/* LEADERSHIP — white */}
+    <section style={{ background: 'var(--bg-white)', padding: '6rem 0', borderBottom: '1px solid var(--line)' }}>
+      <div className="container">
+        <span className="eyebrow">Leadership</span>
+        <h2 style={{ color: 'var(--ink)', marginBottom: '0.75rem' }}>Engineering Leadership.</h2>
+        <p style={{ color: 'var(--ink-3)', marginBottom: '3.5rem', maxWidth: '480px' }}>Directors with over two decades of high-voltage substation and quality management experience.</p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(1,1fr)', gap: '1.5rem', marginBottom: '3rem' }} className="leaders-grid">
+          {COMPANY_INFO.leadership.map((l, i) => (
+            <div key={i} className="card" style={{ padding: '2.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem', paddingBottom: '1.5rem', borderBottom: '1px solid var(--line)', marginBottom: '1.5rem' }}>
                 <div>
-                  <h3 style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>{leader.name}</h3>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--blue-accent)' }}>
-                    {leader.credentials} · {leader.role}
-                  </span>
+                  <h3 style={{ fontSize: '1.25rem', color: 'var(--ink)', marginBottom: '0.25rem' }}>{l.name}</h3>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent)' }}>{l.credentials} · {l.role}</span>
                 </div>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', background: 'var(--blue-subtle)', color: 'var(--blue-accent)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 600 }}>
-                  {leader.experienceYears}
-                </span>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', background: 'var(--accent-light)', color: 'var(--accent)', padding: '0.3rem 0.75rem', borderRadius: '4px' }}>{l.experienceYears}</span>
               </div>
-
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '1.5rem' }}>
-                {leader.summary}
-              </p>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
-                {leader.keyStrengths.map((str, sIdx) => (
-                  <div key={sIdx} style={{ display: 'flex', gap: '0.625rem', alignItems: 'flex-start', fontSize: '0.825rem', color: 'var(--text-muted)' }}>
-                    <Check style={{ width: '14px', height: '14px', color: 'var(--blue-accent)', flexShrink: 0, marginTop: '2px' }} />
-                    <span>{str}</span>
+              <p style={{ fontSize: '0.9rem', color: 'var(--ink-2)', lineHeight: 1.7, marginBottom: '1.5rem' }}>{l.summary}</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                {l.keyStrengths.map((s, si) => (
+                  <div key={si} style={{ display: 'flex', gap: '0.625rem', alignItems: 'flex-start', fontSize: '0.82rem', color: 'var(--ink-3)' }}>
+                    <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--accent)', flexShrink: 0, marginTop: '0.4rem' }} />{s}
                   </div>
                 ))}
               </div>
@@ -171,46 +99,21 @@ export const AboutPage: React.FC<{ onOpenRFQ: () => void }> = ({ onOpenRFQ }) =>
           ))}
         </div>
 
-        {/* Key Engineering Personnel */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '1rem', marginBottom: '2.5rem' }}>
-          {COMPANY_INFO.keyPersonnel.map((person, idx) => (
-            <div key={idx} style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '1.15rem' }}>
-              <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.925rem' }}>{person.name}</div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'var(--blue-accent)', marginTop: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                {person.role}
-              </div>
-              <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>{person.department}</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '1rem', marginBottom: '2.5rem' }} className="team-grid">
+          {COMPANY_INFO.keyPersonnel.map((p, i) => (
+            <div key={i} style={{ background: 'var(--bg-off)', border: '1px solid var(--line)', borderRadius: '6px', padding: '1.125rem 1.25rem' }}>
+              <div style={{ fontWeight: 600, color: 'var(--ink)' }}>{p.name}</div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--accent)', marginTop: '0.2rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{p.role}</div>
+              <div style={{ fontSize: '0.78rem', color: 'var(--ink-3)', marginTop: '0.15rem' }}>{p.department}</div>
             </div>
           ))}
         </div>
 
-        {/* Corporate Independence Note */}
-        <div
-          style={{
-            padding: 'clamp(1.25rem, 3vw, 1.75rem)',
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-color)',
-            borderRadius: '6px',
-            fontSize: '0.85rem',
-            color: 'var(--text-secondary)',
-            lineHeight: 1.68,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '1.25rem',
-            flexWrap: 'wrap',
-          }}
-        >
-          <div style={{ maxWidth: '680px' }}>
-            <strong style={{ color: 'var(--text-primary)' }}>Corporate Identity Note: </strong>
-            Moxie Infratech Pvt Ltd is an independent EPC contractor. Ingaran Power Controls Private Limited is an independent associate entity and not a division or subsidiary of Moxie Infratech.
-          </div>
-          <button onClick={onOpenRFQ} className="btn-primary" style={{ width: '100%', maxWidth: '280px', minHeight: '48px' }}>
-            Discuss Your Project <ArrowRight style={{ width: '0.9rem', height: '0.9rem' }} />
-          </button>
+        <div style={{ padding: '1.25rem 1.75rem', background: 'var(--bg-off)', border: '1px solid var(--line)', borderRadius: '6px', fontSize: '0.82rem', color: 'var(--ink-3)', lineHeight: 1.7 }}>
+          <strong style={{ color: 'var(--ink-2)' }}>Corporate Independence: </strong>
+          Moxie Infratech Pvt Ltd is an independent EPC contractor. Ingaran Power Controls Private Limited is a separate entity and is not a subsidiary or division of Moxie Infratech.
         </div>
       </div>
     </section>
-
   </div>
 );

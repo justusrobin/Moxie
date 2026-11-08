@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { ThemeProvider } from './context/ThemeContext';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
@@ -14,44 +15,49 @@ import type { ProjectItem } from './data/companyData';
 
 const TABS = ['home', 'about', 'services', 'projects', 'industries', 'contact'];
 
-export function App() {
-  const [currentTab, setCurrentTab]     = useState<string>('home');
-  const [visibleTab, setVisibleTab]     = useState<string>('home');   // what's actually rendered
-  const [pageVisible, setPageVisible]   = useState(true);             // for fade transition
+function getInitialTab(): string {
+  if (typeof window !== 'undefined') {
+    const hash = window.location.hash.replace('#', '');
+    if (TABS.includes(hash)) return hash;
+  }
+  return 'home';
+}
+
+export function AppContent() {
+  const [currentTab, setCurrentTab] = useState<string>(getInitialTab);
+  const [visibleTab, setVisibleTab] = useState<string>(getInitialTab);
+  const [pageVisible, setPageVisible] = useState(true);
   const [rfqModalOpen, setRfqModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
-  const [rfqInitialData, setRfqInitialData]   = useState<any>(null);
+  const [rfqInitialData, setRfqInitialData] = useState<any>(null);
   const transitionRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  /* Sync hash on load */
-  useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
-    if (TABS.includes(hash)) { setCurrentTab(hash); setVisibleTab(hash); }
-    const onHash = () => {
-      const h = window.location.hash.replace('#', '');
-      if (TABS.includes(h)) handleNavigate(h);
-    };
-    window.addEventListener('hashchange', onHash);
-    return () => window.removeEventListener('hashchange', onHash);
-  }, []);
-
-  const handleNavigate = (tab: string) => {
+  const handleNavigate = useCallback((tab: string) => {
     if (tab === currentTab) return;
 
-    /* Fade out */
     setPageVisible(false);
     if (transitionRef.current) clearTimeout(transitionRef.current);
 
     transitionRef.current = setTimeout(() => {
-      /* Swap content */
       setCurrentTab(tab);
       setVisibleTab(tab);
       window.location.hash = tab;
       window.scrollTo({ top: 0, behavior: 'instant' });
-      /* Fade in */
       setPageVisible(true);
-    }, 260);
-  };
+    }, 200);
+  }, [currentTab]);
+
+  // Sync hash changes from browser back/forward buttons
+  useEffect(() => {
+    const onHash = () => {
+      const h = window.location.hash.replace('#', '');
+      if (TABS.includes(h)) {
+        handleNavigate(h);
+      }
+    };
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, [handleNavigate]);
 
   const openRFQ = (data?: any) => {
     setRfqInitialData(data ?? null);
@@ -59,15 +65,17 @@ export function App() {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: 'var(--bg-white)',
-      color: 'var(--ink)',
-      display: 'flex',
-      flexDirection: 'column',
-      fontFamily: 'var(--font-body)',
-    }}>
-      {/* Splash loading screen */}
+    <div
+      style={{
+        minHeight: '100vh',
+        backgroundColor: 'var(--bg-main)',
+        color: 'var(--text-primary)',
+        display: 'flex',
+        flexDirection: 'column',
+        fontFamily: 'var(--font-body)',
+      }}
+    >
+      {/* Lightweight Loading Screen */}
       <LoadingScreen />
 
       {/* Header */}
@@ -77,15 +85,13 @@ export function App() {
         onOpenRFQ={() => openRFQ()}
       />
 
-      {/* Page content with fade transition */}
+      {/* Page content with smooth fade transition */}
       <main
         style={{
           flex: 1,
           opacity: pageVisible ? 1 : 0,
-          transform: pageVisible ? 'translateY(0)' : 'translateY(10px)',
-          transition: pageVisible
-            ? 'opacity 0.35s ease, transform 0.35s ease'
-            : 'opacity 0.22s ease, transform 0.22s ease',
+          transform: pageVisible ? 'translateY(0)' : 'translateY(8px)',
+          transition: 'opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1), transform 0.25s cubic-bezier(0.22, 1, 0.36, 1)',
           willChange: 'opacity, transform',
         }}
       >
@@ -93,8 +99,8 @@ export function App() {
           <HomePage
             onNavigate={handleNavigate}
             onOpenRFQ={() => openRFQ()}
-            onSelectProject={p => setSelectedProject(p)}
-            onPreFillRFQ={data => openRFQ(data)}
+            onSelectProject={(p) => setSelectedProject(p)}
+            onPreFillRFQ={(data) => openRFQ(data)}
           />
         )}
         {visibleTab === 'about' && (
@@ -103,12 +109,12 @@ export function App() {
         {visibleTab === 'services' && (
           <ServicesPage
             onOpenRFQ={() => openRFQ()}
-            onPreFillRFQ={data => openRFQ(data)}
+            onPreFillRFQ={(data) => openRFQ(data)}
           />
         )}
         {visibleTab === 'projects' && (
           <ProjectsPage
-            onSelectProject={p => setSelectedProject(p)}
+            onSelectProject={(p) => setSelectedProject(p)}
             onOpenRFQ={() => openRFQ()}
           />
         )}
@@ -145,9 +151,20 @@ export function App() {
       <RFQModal
         isOpen={rfqModalOpen}
         initialData={rfqInitialData}
-        onClose={() => { setRfqModalOpen(false); setRfqInitialData(null); }}
+        onClose={() => {
+          setRfqModalOpen(false);
+          setRfqInitialData(null);
+        }}
       />
     </div>
+  );
+}
+
+export function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 

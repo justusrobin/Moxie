@@ -14,7 +14,12 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenRFQ
 }) => {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [menuOpenForTab, setMenuOpenForTab] = useState<string | null>(null);
+  const mobileMenuOpen = menuOpenForTab === currentTab;
+
+  const setMobileMenuOpen = (open: boolean) => {
+    setMenuOpenForTab(open ? currentTab : null);
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -22,11 +27,6 @@ export const Header: React.FC<HeaderProps> = ({
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // Close mobile menu when tab changes
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [currentTab]);
 
   const navItems = [
     { id: 'about', label: 'About' },

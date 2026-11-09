@@ -733,6 +733,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRFQ }) => {
           .accordion-findus-actions {
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
             gap: 0.5rem;
             margin-top: 0.35rem;
           }
